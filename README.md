@@ -245,24 +245,32 @@ mynet.compile(optimizer=tf.keras.optimizers.SGD(learning_rate=0.01),
 ```python
 # 模型训练：指定训练数据，batchsize,epoch,验证集
 
-history = mynet.fit(train_images,train_labels,batch_size=64,epochs=6,verbose=1,validation_split=0.1)
+history = mynet.fit(train_images,train_labels,batch_size=128,epochs=10,verbose=1,validation_split=0.1)
 ```
 
 
 
 ```python
-Epoch 1/6
-704/704 [==============================] - 24s 31ms/step - loss: 1.8808 - accuracy: 0.3725 - sparse_top_k_categorical_accuracy: 0.8490 - val_loss: 2.1699 - val_accuracy: 0.3488 - val_sparse_top_k_categorical_accuracy: 0.8356
-Epoch 2/6
-704/704 [==============================] - 21s 30ms/step - loss: 1.1983 - accuracy: 0.5700 - sparse_top_k_categorical_accuracy: 0.9509 - val_loss: 1.5290 - val_accuracy: 0.4916 - val_sparse_top_k_categorical_accuracy: 0.9112
-Epoch 3/6
-704/704 [==============================] - 20s 29ms/step - loss: 0.9865 - accuracy: 0.6491 - sparse_top_k_categorical_accuracy: 0.9692 - val_loss: 2.1812 - val_accuracy: 0.3572 - val_sparse_top_k_categorical_accuracy: 0.8312
-Epoch 4/6
-704/704 [==============================] - 22s 32ms/step - loss: 0.8344 - accuracy: 0.7066 - sparse_top_k_categorical_accuracy: 0.9802 - val_loss: 1.4919 - val_accuracy: 0.5090 - val_sparse_top_k_categorical_accuracy: 0.9288
-Epoch 5/6
-704/704 [==============================] - 22s 32ms/step - loss: 0.6848 - accuracy: 0.7587 - sparse_top_k_categorical_accuracy: 0.9876 - val_loss: 5.1577 - val_accuracy: 0.2474 - val_sparse_top_k_categorical_accuracy: 0.7586 - sparse_top_ - ETA: 5s - loss: 0.6791 - accuracy: 0.7611 - sparse_top_k_categorica
-Epoch 6/6
-704/704 [==============================] - 22s 32ms/step - loss: 0.5880 - accuracy: 0.7914 - sparse_top_k_categorical_accuracy: 0.9916 - val_loss: 1.2544 - val_accuracy: 0.5976 - val_sparse_top_k_categorical_accuracy: 0.9586
+Epoch 1/10
+352/352 [==============================] - 16s 38ms/step - loss: 1.9205 - accuracy: 0.3540 - sparse_top_k_categorical_accuracy: 0.8358 - val_loss: 2.2429 - val_accuracy: 0.2636 - val_sparse_top_k_categorical_accuracy: 0.7196
+Epoch 2/10
+352/352 [==============================] - 12s 33ms/step - loss: 1.2428 - accuracy: 0.5505 - sparse_top_k_categorical_accuracy: 0.9493 - val_loss: 1.5182 - val_accuracy: 0.4796 - val_sparse_top_k_categorical_accuracy: 0.9218
+Epoch 3/10
+352/352 [==============================] - 12s 33ms/step - loss: 1.0253 - accuracy: 0.6352 - sparse_top_k_categorical_accuracy: 0.9676 - val_loss: 1.4068 - val_accuracy: 0.5202 - val_sparse_top_k_categorical_accuracy: 0.9296- accuracy: 0.63 - ETA: 5s - loss: 1.0232 - accuracy: 0.6367 - sparse_top_k_categorical_accuracy: 0.96 - ETA: 5s - loss: 1.0232 - accuracy: 0.6367 - sparse_top_k_catego - ETA: 4s - loss: 1.0236 - accuracy: 0.6364 - spars - ETA: 3s - loss: 1.0241 - accuracy: 0.6361 - sparse_top_k_catego - ETA: 2s - loss: 1.0244 - accuracy: 0. - ETA: 0s - loss: 1.0250 - accuracy: 0.6355 - sparse_top_k_categorical_accuracy: 0. - ETA: 0s - loss: 1.0251 - accuracy: 0.6354 - sparse_top_k_ca
+Epoch 4/10
+352/352 [==============================] - 12s 33ms/step - loss: 0.8650 - accuracy: 0.6944 - sparse_top_k_categorical_accuracy: 0.9773 - val_loss: 1.9183 - val_accuracy: 0.4112 - val_sparse_top_k_categorical_accuracy: 0.8958
+Epoch 5/10
+352/352 [==============================] - 12s 34ms/step - loss: 0.7244 - accuracy: 0.7432 - sparse_top_k_categorical_accuracy: 0.9861 - val_loss: 1.7639 - val_accuracy: 0.4606 - val_sparse_top_k_categorical_accuracy: 0.9162
+Epoch 6/10
+352/352 [==============================] - 12s 33ms/step - loss: 0.5952 - accuracy: 0.7906 - sparse_top_k_categorical_accuracy: 0.9913 - val_loss: 1.7132 - val_accuracy: 0.4960 - val_sparse_top_k_categorical_accuracy: 0.9172
+Epoch 7/10
+352/352 [==============================] - 12s 33ms/step - loss: 0.4616 - accuracy: 0.8423 - sparse_top_k_categorical_accuracy: 0.9955 - val_loss: 1.3809 - val_accuracy: 0.5782 - val_sparse_top_k_categorical_accuracy: 0.9464rse_top_k_cate - ETA: 7s - loss: 0.4339 - accuracy: 0.8590 - sparse_to - ETA: 6s - loss: 0.4377 - accuracy:  - ETA: 5s - loss: 0.4437 - accuracy: 0.8522 - sparse_top_k_categorical_accuracy:  - ETA: 5s - loss: 0.4 - ETA: 3s - loss: 0.4516 - accuracy: 0.8475 - sparse_top_k_categorica - ETA: 2s - loss: 0.4534 - accuracy: 0.8464 - ETA: 1s - loss: 0.4581 - accuracy: 0.8440 - sparse_
+Epoch 8/10
+352/352 [==============================] - 12s 33ms/step - loss: 0.3680 - accuracy: 0.8738 - sparse_top_k_categorical_accuracy: 0.9978 - val_loss: 1.6090 - val_accuracy: 0.5554 - val_sparse_top_k_categorical_accuracy: 0.9466
+Epoch 9/10
+352/352 [==============================] - 12s 34ms/step - loss: 0.2876 - accuracy: 0.9011 - sparse_top_k_categorical_accuracy: 0.9993 - val_loss: 1.7395 - val_accuracy: 0.5532 - val_sparse_top_k_categorical_accuracy: 0.9344accuracy: 0.9016 - sparse_top_k_categorical_
+Epoch 10/10
+352/352 [==============================] - 12s 33ms/step - loss: 0.2253 - accuracy: 0.9213 - sparse_top_k_categorical_accuracy: 0.9992 - val_loss: 1.5032 - val_accuracy: 0.6016 - val_sparse_top_k_categorical_accuracy: 0.9536
 ```
 
 
@@ -274,7 +282,7 @@ mynet.evaluate(test_images,test_labels,verbose=1)
 ```
 
 ```python
-313/313 [==============================] - 3s 9ms/step - loss: 1.2876 - accuracy: 0.5928 - sparse_top_k_categorical_accuracy: 0.9569
+313/313 [==============================] - 3s 9ms/step - loss: 1.5742 - accuracy: 0.5921 - sparse_top_k_categorical_accuracy: 0.9488
 ```
 
 #### 6.1loss
@@ -289,7 +297,7 @@ plt.legend()
 plt.grid()
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604225101264.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210605001722839.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
 
 
 #### 6.2acc_top1
@@ -304,8 +312,7 @@ plt.legend()
 plt.grid()
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604234654650.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
-
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210605001747768.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
 
 #### 6.3acc_top5
 

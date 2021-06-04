@@ -144,7 +144,7 @@ class ResnetBlock(tf.keras.layers.Layer):
 
 #### 3.4ResNet模型
 
-ResNet的前两层跟之前介绍的GoogLeNet中的一样：在输出通道数为64、步幅为2的7×77×7卷积层后接步幅为2的3×33×3的最大池化层。不同之处在于ResNet每个卷积层后增加了BN层,接着是所有残差模块，最后，与GoogLeNet一样，加入全局平均池化层（GAP）后接上全连接层输出。
+ResNet的前两层跟之前提出的GoogLeNet中的一样：在输出通道数为64、步幅为2的7×77×7卷积层后接步幅为2的3×33×3的最大池化层。不同之处在于ResNet每个卷积层后增加了BN层,接着是所有残差模块，最后，与GoogLeNet一样，加入全局平均池化层（GAP）后接上全连接层输出。
 
 ```python
 class ResNet(tf.keras.Model):
@@ -304,7 +304,7 @@ plt.legend()
 plt.grid()
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604225111489.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604234654650.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
 
 
 #### 6.3acc_top5

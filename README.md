@@ -346,6 +346,7 @@ print("下面的图预测结结果是",class_names[mynet.predict(np.array([newpi
 
 
 
+
 ```python
 image = Image.open("./img/bird.jpg")
 plt.imshow(image)
@@ -358,11 +359,8 @@ print("下面的图预测结结果是",class_names[mynet.predict(np.array([newpi
 > 下面的图预测结结果是 bird
 >
 > ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604225144668.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+
 ---
+
 更多相关内容可以前往我的博客：[https://blog.csdn.net/weixin_39574469/article/details/117574216](https://blog.csdn.net/weixin_39574469/article/details/117574216)
-
-
-
-
-
 

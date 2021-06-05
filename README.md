@@ -43,7 +43,7 @@ for i in range(25):
 plt.show()
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/2021060422460596.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2021060422460596.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
 
 
 
@@ -62,12 +62,12 @@ plt.show()
 
 假设 F(x) 代表某个只包含有两层的映射函数， x 是输入， F(x)是输出。假设他们具有相同的维度。在训练的过程中我们希望能够通过修改网络中的 w和b去拟合一个理想的 H(x)(从输入到输出的一个理想的映射函数)。也就是我们的目标是修改F(x) 中的 w和b逼近 H(x) 。如果我们改变思路，用F(x) 来逼近 H(x)-x ，那么我们最终得到的输出就变为 F(x)+x（这里的加指的是对应位置上的元素相加，也就是element-wise addition），这里将直接从输入连接到输出的结构也称为shortcut，那整个结构就是残差块，ResNet的基础模块。
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604224956544.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604224956544.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
 
 
 ResNet沿用了VGG全3×33×3卷积层的设计。残差块里首先有2个有相同输出通道数的3×33×3卷积层。每个卷积层后接BN层和ReLU激活函数，然后将输入直接加在最后的ReLU激活函数前，这种结构用于层数较少的神经网络中，比如ResNet34。若输入通道数比较多，就需要引入1×11×1卷积层来调整输入的通道数，这种结构也叫作瓶颈模块，通常用于网络层数较多的结构中。如下图所示：
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604225010750.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604225010750.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
 
 
 
@@ -76,7 +76,8 @@ ResNet沿用了VGG全3×33×3卷积层的设计。残差块里首先有2个有�
 
 
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/2021060422502481.png#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210605140158783.png#pic_center)
+
 
 
 ```python
@@ -112,7 +113,7 @@ class Residual(tf.keras.Model):
 
 ResNet模型的构成如下图所示：
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/202106042250419.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/202106042250419.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
 
 
 
@@ -152,13 +153,13 @@ class ResNet(tf.keras.Model):
     def __init__(self,num_blocks):
         super(ResNet,self).__init__()
         # 输入层
-        self.conv = layers.Conv2D(64,kernel_size=7,strides=2,padding="same")
+        self.conv = layers.Conv2D(64,kernel_size=3,strides=1,padding="same")
         # BN层
         self.bn = layers.BatchNormalization()
         # 激活层
         self.relu = layers.Activation("relu")
         # 池化层
-        self.mp = layers.MaxPool2D(pool_size=3,strides=2,padding="same")
+        self.mp = layers.MaxPool2D(pool_size=2,strides=1,padding="same")
         self.res_block1 = ResnetBlock(64,num_blocks[0],first_block=True)
         self.res_block2 = ResnetBlock(128,num_blocks[1])
         self.res_block3 = ResnetBlock(256,num_blocks[2])
@@ -190,7 +191,7 @@ class ResNet(tf.keras.Model):
 ```python
 # 实例化
 mynet = ResNet([2,2,2,2])
-X = tf.random.uniform(shape=(1,224,224,3))
+X = tf.random.uniform(shape=(1,32,32,3))
 y = mynet(X)
 mynet.summary()
 ```
@@ -200,28 +201,28 @@ Model: "res_net"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-conv2d_60 (Conv2D)           multiple                  9472      
+conv2d_20 (Conv2D)           multiple                  1792      
 _________________________________________________________________
-batch_normalization_51 (Batc multiple                  256       
+batch_normalization_17 (Batc multiple                  256       
 _________________________________________________________________
-activation_3 (Activation)    multiple                  0         
+activation_1 (Activation)    multiple                  0         
 _________________________________________________________________
-max_pooling2d_3 (MaxPooling2 multiple                  0         
+max_pooling2d_1 (MaxPooling2 multiple                  0         
 _________________________________________________________________
-resnet_block_12 (ResnetBlock multiple                  148736    
+resnet_block_4 (ResnetBlock) multiple                  148736    
 _________________________________________________________________
-resnet_block_13 (ResnetBlock multiple                  526976    
+resnet_block_5 (ResnetBlock) multiple                  526976    
 _________________________________________________________________
-resnet_block_14 (ResnetBlock multiple                  2102528   
+resnet_block_6 (ResnetBlock) multiple                  2102528   
 _________________________________________________________________
-resnet_block_15 (ResnetBlock multiple                  8399360   
+resnet_block_7 (ResnetBlock) multiple                  8399360   
 _________________________________________________________________
-global_average_pooling2d_3 ( multiple                  0         
+global_average_pooling2d_1 ( multiple                  0         
 _________________________________________________________________
-dense_3 (Dense)              multiple                  5130      
+dense_1 (Dense)              multiple                  5130      
 =================================================================
-Total params: 11,192,458
-Trainable params: 11,184,650
+Total params: 11,184,778
+Trainable params: 11,176,970
 Non-trainable params: 7,808
 _________________________________________________________________
 ```
@@ -232,8 +233,7 @@ _________________________________________________________________
 
 ```python
 # 优化器，损失函数，评价指标
-
-mynet.compile(optimizer=tf.keras.optimizers.SGD(learning_rate=0.01),
+mynet.compile(optimizer=tf.keras.optimizers.SGD(learning_rate=0.005,momentum=0.9),
             loss=tf.keras.losses.sparse_categorical_crossentropy,
             metrics = ["accuracy",tf.keras.metrics.sparse_top_k_categorical_accuracy],loss_weights=[1,0.3,0.3])
 ```
@@ -244,33 +244,25 @@ mynet.compile(optimizer=tf.keras.optimizers.SGD(learning_rate=0.01),
 
 ```python
 # 模型训练：指定训练数据，batchsize,epoch,验证集
-
-history = mynet.fit(train_images,train_labels,batch_size=128,epochs=10,verbose=1,validation_split=0.1)
+history = mynet.fit(train_images,train_labels,batch_size=100,epochs=100,verbose=1,validation_split=0.1)
 ```
 
 
 
 ```python
-Epoch 1/10
-352/352 [==============================] - 16s 38ms/step - loss: 1.9205 - accuracy: 0.3540 - sparse_top_k_categorical_accuracy: 0.8358 - val_loss: 2.2429 - val_accuracy: 0.2636 - val_sparse_top_k_categorical_accuracy: 0.7196
-Epoch 2/10
-352/352 [==============================] - 12s 33ms/step - loss: 1.2428 - accuracy: 0.5505 - sparse_top_k_categorical_accuracy: 0.9493 - val_loss: 1.5182 - val_accuracy: 0.4796 - val_sparse_top_k_categorical_accuracy: 0.9218
-Epoch 3/10
-352/352 [==============================] - 12s 33ms/step - loss: 1.0253 - accuracy: 0.6352 - sparse_top_k_categorical_accuracy: 0.9676 - val_loss: 1.4068 - val_accuracy: 0.5202 - val_sparse_top_k_categorical_accuracy: 0.9296- accuracy: 0.63 - ETA: 5s - loss: 1.0232 - accuracy: 0.6367 - sparse_top_k_categorical_accuracy: 0.96 - ETA: 5s - loss: 1.0232 - accuracy: 0.6367 - sparse_top_k_catego - ETA: 4s - loss: 1.0236 - accuracy: 0.6364 - spars - ETA: 3s - loss: 1.0241 - accuracy: 0.6361 - sparse_top_k_catego - ETA: 2s - loss: 1.0244 - accuracy: 0. - ETA: 0s - loss: 1.0250 - accuracy: 0.6355 - sparse_top_k_categorical_accuracy: 0. - ETA: 0s - loss: 1.0251 - accuracy: 0.6354 - sparse_top_k_ca
-Epoch 4/10
-352/352 [==============================] - 12s 33ms/step - loss: 0.8650 - accuracy: 0.6944 - sparse_top_k_categorical_accuracy: 0.9773 - val_loss: 1.9183 - val_accuracy: 0.4112 - val_sparse_top_k_categorical_accuracy: 0.8958
-Epoch 5/10
-352/352 [==============================] - 12s 34ms/step - loss: 0.7244 - accuracy: 0.7432 - sparse_top_k_categorical_accuracy: 0.9861 - val_loss: 1.7639 - val_accuracy: 0.4606 - val_sparse_top_k_categorical_accuracy: 0.9162
-Epoch 6/10
-352/352 [==============================] - 12s 33ms/step - loss: 0.5952 - accuracy: 0.7906 - sparse_top_k_categorical_accuracy: 0.9913 - val_loss: 1.7132 - val_accuracy: 0.4960 - val_sparse_top_k_categorical_accuracy: 0.9172
-Epoch 7/10
-352/352 [==============================] - 12s 33ms/step - loss: 0.4616 - accuracy: 0.8423 - sparse_top_k_categorical_accuracy: 0.9955 - val_loss: 1.3809 - val_accuracy: 0.5782 - val_sparse_top_k_categorical_accuracy: 0.9464rse_top_k_cate - ETA: 7s - loss: 0.4339 - accuracy: 0.8590 - sparse_to - ETA: 6s - loss: 0.4377 - accuracy:  - ETA: 5s - loss: 0.4437 - accuracy: 0.8522 - sparse_top_k_categorical_accuracy:  - ETA: 5s - loss: 0.4 - ETA: 3s - loss: 0.4516 - accuracy: 0.8475 - sparse_top_k_categorica - ETA: 2s - loss: 0.4534 - accuracy: 0.8464 - ETA: 1s - loss: 0.4581 - accuracy: 0.8440 - sparse_
-Epoch 8/10
-352/352 [==============================] - 12s 33ms/step - loss: 0.3680 - accuracy: 0.8738 - sparse_top_k_categorical_accuracy: 0.9978 - val_loss: 1.6090 - val_accuracy: 0.5554 - val_sparse_top_k_categorical_accuracy: 0.9466
-Epoch 9/10
-352/352 [==============================] - 12s 34ms/step - loss: 0.2876 - accuracy: 0.9011 - sparse_top_k_categorical_accuracy: 0.9993 - val_loss: 1.7395 - val_accuracy: 0.5532 - val_sparse_top_k_categorical_accuracy: 0.9344accuracy: 0.9016 - sparse_top_k_categorical_
-Epoch 10/10
-352/352 [==============================] - 12s 33ms/step - loss: 0.2253 - accuracy: 0.9213 - sparse_top_k_categorical_accuracy: 0.9992 - val_loss: 1.5032 - val_accuracy: 0.6016 - val_sparse_top_k_categorical_accuracy: 0.9536
+Epoch 1/100
+450/450 [==============================] - 50s 102ms/step - loss: 1.6243 - accuracy: 0.4205 - sparse_top_k_categorical_accuracy: 0.8757 - val_loss: 1.5159 - val_accuracy: 0.4866 - val_sparse_top_k_categorical_accuracy: 0.9206s - loss: 2.1511 - accuracy: 0.2566 - sparse_top_k_categorical_accuracy: 0.753 - ETA: 36s - loss: 2.1472 - accura - ETA: 30s - loss: 1.9909 - accuracy: 0.3021 - sparse_top_k_catego - ETA: 28s - loss: 1.9448 - accuracy: 0.3161 - sparse_t - ETA: 25s - loss: 1.8873 - accuracy: 0.3339 - sparse_top_k_categorical_accurac - ETA: 24s - loss: 1.8735 - accuracy: 0.3381 - sparse_top_k - E - ETA: 13s - loss: 1.7369 - accuracy: 0.3821 - sparse_top_k_categorical_accuracy: 0.8 - ETA: 13s - loss: 1.7340 - accuracy: 0.3831 - sparse_top_k_cate - ETA: 6s - loss: 1.6709 - accuracy: 0.4044 - s
+Epoch 2/100
+450/450 [==============================] - 45s 100ms/step - loss: 0.8699 - accuracy: 0.6918 - sparse_top_k_categorical_accuracy: 0.9763 - val_loss: 1.0755 - val_accuracy: 0.6096 - val_sparse_top_k_categorical_accuracy: 0.96864s - loss: 0.8930 - accuracy: 0.6784 - sparse_top_k_categorical_accur - ETA: 33s - loss: 0.8925 - accuracy: 0.6792 - sparse_top_k_categorical_accura - ETA: 32s - loss: 0.8917 - accuracy:  - ETA: 27s - loss: 0.8875 - accuracy: 0.6830 - sp - ETA: 23s - loss: 0.8849 - accuracy: 0.6847 - sparse_top_k_categoric - ETA: 21s - loss: 0.8839 - accuracy: 0.6854 - sparse_top_k_categorical_accur - ETA: 20s - loss: 0.8834 - accuracy: 0.6857 - sparse_top_k_cat - ETA: 18s - loss: 0.8820 - accuracy: 0.6866 - sparse_top_k_categorical_accurac - ETA: 17s - loss: 0.8816 - accuracy: 0.6868 - sparse_top_k_categorical_accuracy: 0.97 - ETA: 17s - loss: 0.8815 - accuracy: 0.6868 - sparse_top_k_categorical_accuracy - ETA: 16s - loss: 0.8811 - accuracy: 0.6871 - sparse_top_k_categorical_accura - ETA: 15s - loss: 0.8805 - accuracy: 0.6873 - sparse_top_k_cat - ETA: 13s - loss: 0.8791 - accuracy: 0.6881 - sparse_top_k_categorical_accuracy - ETA: 12 - ETA: 7s - loss: 0.8753  - ETA: 4s - loss: 0.8731  - ETA: 1s - loss: 0.8709 - accuracy: 0.6914 - sparse_top_
+Epoch 3/100
+450/450 [==============================] - 45s 100ms/step - loss: 0.6026 - accuracy: 0.7886 - sparse_top_k_categorical_accuracy: 0.9901 - val_loss: 1.3170 - val_accuracy: 0.5724 - val_sparse_top_k_categorical_accuracy: 0.9614ac
+=========================================================================================================================================================================================================================
+Epoch 98/100
+450/450 [==============================] - 51s 113ms/step - loss: 3.1858e-05 - accuracy: 1.0000 - sparse_top_k_categorical_accuracy: 1.0000 - val_loss: 0.9684 - val_accuracy: 0.8122 - val_sparse_top_k_categorical_accuracy: 0.9880
+Epoch 99/100
+450/450 [==============================] - 52s 116ms/step - loss: 3.4269e-05 - accuracy: 1.0000 - sparse_top_k_categorical_accuracy: 1.0000 - val_loss: 0.9706 - val_accuracy: 0.8120 - val_sparse_top_k_categorical_accuracy: 0.9882
+Epoch 100/100
+450/450 [==============================] - 51s 112ms/step - loss: 3.3821e-05 - accuracy: 1.0000 - sparse_top_k_categorical_accuracy: 1.0000 - val_loss: 0.9698 - val_accuracy: 0.8116 - val_sparse_top_k_categorical_accuracy: 0.9882
 ```
 
 
@@ -282,7 +274,7 @@ mynet.evaluate(test_images,test_labels,verbose=1)
 ```
 
 ```python
-313/313 [==============================] - 3s 9ms/step - loss: 1.5742 - accuracy: 0.5921 - sparse_top_k_categorical_accuracy: 0.9488
+313/313 [==============================] - 5s 15ms/step - loss: 0.9799 - accuracy: 0.8123 - sparse_top_k_categorical_accuracy: 0.9864
 ```
 
 #### 6.1loss
@@ -297,7 +289,9 @@ plt.legend()
 plt.grid()
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210605001722839.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210605135839349.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+
+
 
 
 #### 6.2acc_top1
@@ -312,7 +306,10 @@ plt.legend()
 plt.grid()
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210605001747768.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210605140035345.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+
+
+
 
 #### 6.3acc_top5
 
@@ -326,7 +323,8 @@ plt.legend()
 plt.grid()
 ```
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604225121466.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210605140100189.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+
 
 
 ### 7.预测
@@ -342,7 +340,7 @@ print("下面的图预测结结果是",class_names[mynet.predict(np.array([newpi
 
 > 下面的图预测结结果是 ship
 >
-> ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604225134559.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
+> ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604225134559.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
 
 
 
@@ -360,12 +358,12 @@ print("下面的图预测结结果是",class_names[mynet.predict(np.array([newpi
 
 > 下面的图预测结结果是 bird
 >
-> ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604225144668.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
-
-
-
+> ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210604225144668.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTU3NDQ2OQ==,size_16,color_FFFFFF,t_70#pic_center)
 ---
-更多ai相关内容可以查看我的博客：
-[https://blog.csdn.net/weixin_39574469/article/details/117574216](https://blog.csdn.net/weixin_39574469/article/details/117574216)
+完整的代码已经上传到github：[https://github.com/a5116638/cifar10-resnet18](https://github.com/a5116638/cifar10-resnet18)
+
+
+
+
 
 

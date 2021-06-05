@@ -345,7 +345,6 @@ print("下面的图预测结结果是",class_names[mynet.predict(np.array([newpi
 
 
 
-### 
 
 ```python
 image = Image.open("./img/bird.jpg")
